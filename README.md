@@ -48,7 +48,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md), [the roadmap](ROADMAP.md),
 Please use synthetic examples in public issues and keep private data and keys
 outside the repository. CI checks the Windows workspace and Linux headless core.
 
-Open **Pelagic.exe** in this repository or the portable package. In a release ZIP,
+After building, open **Pelagic.exe** in your checkout or use a portable package. In a release ZIP,
 **PelagicSetup.exe** adds verified per-user installation, a stable launcher, updates
 and rollback. The build is unsigned; see [distribution](docs/DISTRIBUTION.md).
 

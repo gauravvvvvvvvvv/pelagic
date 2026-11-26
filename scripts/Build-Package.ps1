@@ -14,7 +14,7 @@ try {
     New-Item -ItemType Directory -Path $stage | Out-Null
     foreach ($name in @('SDK','Examples','Data','Docs','Source')) { New-Item -ItemType Directory -Path (Join-Path $stage $name) | Out-Null }
     $source=Join-Path $stage 'Source'
-    foreach ($file in @('Cargo.toml','Cargo.lock','build.rs','LICENSE','NOTICE','README.md','ROADMAP.md','CHANGELOG.md','CONTRIBUTING.md','SECURITY.md','.gitignore')) {Copy-Item -LiteralPath (Join-Path $project $file) -Destination $source}
+    foreach ($file in @('Cargo.toml','Cargo.lock','build.rs','LICENSE','NOTICE','README.md','ROADMAP.md','CHANGELOG.md','CONTRIBUTING.md','SECURITY.md','.gitignore','.gitattributes')) {Copy-Item -LiteralPath (Join-Path $project $file) -Destination $source}
     foreach ($folder in @('src','crates','apps','examples','scripts','tests','include','third-party','.cargo','.github','docs')) {Copy-Item -LiteralPath (Join-Path $project $folder) -Destination (Join-Path $source $folder) -Recurse}
     Copy-Item -LiteralPath (Join-Path $project 'Pelagic.exe') -Destination $stage
     Copy-Item -LiteralPath (Join-Path $project 'target\release\examples\distribution.exe') -Destination (Join-Path $stage 'PelagicSetup.exe')

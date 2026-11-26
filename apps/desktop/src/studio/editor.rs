@@ -2083,7 +2083,7 @@ impl State {
                     .inner_margin(egui::Margin::symmetric(10, 6)),
             )
             .show(ui, |ui| {
-                ui.horizontal(|ui| {
+                ui.horizontal_wrapped(|ui| {
                     theme::group(ui, |ui| {
                         if ui
                             .button("💾 Save")
@@ -2192,7 +2192,10 @@ impl State {
                             self.view_dirty = true;
                         }
                     });
-                    ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+                    if ui.available_width() < 170.0 {
+                        ui.end_row();
+                    }
+                    ui.vertical(|ui| {
                         let before = self.graphics;
                         let fps = 1000.0 / self.frame_ms.max(0.1);
                         let menu = ui.menu_button(self.graphics.label(), |ui| {

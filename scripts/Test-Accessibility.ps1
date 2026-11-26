@@ -108,4 +108,8 @@ try {
     @{pass=$true;gpu_preview=[bool]$GpuPreview;editor_layout=[bool]$EditorLayout;process_id=$app.Id;controls=$names;invoke=$true;set_value=$true;restored_value=$old;edit_feedback_ms=$latency.Elapsed.TotalMilliseconds;native_paint_soak=1000;private_growth_bytes=$growth;gdi_growth=$gdiGrowth;idle_cpu_ms_per_2s=$idle;working_set_bytes=$app.WorkingSet64;private_bytes=$app.PrivateMemorySize64;screen_capture=$false} | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath $reportPath -Encoding UTF8
 } finally {
     if (-not $app.HasExited -and $window -ne [IntPtr]::Zero) {[PelagicTestWindow]::PostMessage($window,16,[UIntPtr]::Zero,[IntPtr]::Zero) | Out-Null}
+    # A modified synthetic fixture may display an unsaved-changes dialog.
+    # Tear down only the process this test launched; never leave it locking
+    # the build executable or ask the user's real editor to close.
+    if(-not $app.WaitForExit(2000)){Stop-Process -Id $app.Id -Force}
 }
