@@ -5,6 +5,7 @@ param([Parameter(Mandatory=$true)][string]$Executable,[Parameter(Mandatory=$true
 # all editor state goes to an isolated --test-storage folder.
 $ErrorActionPreference='Stop'
 Add-Type -AssemblyName UIAutomationClient,UIAutomationTypes
+Add-Type 'using System; using System.Runtime.InteropServices; public static class PelagicStudioTestWindow { [DllImport("user32.dll")] public static extern uint GetDpiForWindow(IntPtr hwnd); [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr hwnd, int command); [DllImport("user32.dll")] public static extern bool SetWindowPos(IntPtr hwnd, IntPtr after, int x, int y, int width, int height, uint flags); }'
 $exePath=(Resolve-Path -LiteralPath $Executable).Path
 $reportPath=[IO.Path]::GetFullPath($Report)
 $isolated=Join-Path ([IO.Path]::GetDirectoryName($reportPath)) ('studio-a11y-state-'+[Guid]::NewGuid().ToString('N'))
@@ -15,7 +16,8 @@ $checks=[ordered]@{}
 try {
     for($i=0;$i -lt 150 -and -not (Test-Path -LiteralPath $handleFile);$i++){Start-Sleep -Milliseconds 100}
     if(-not (Test-Path -LiteralPath $handleFile)){throw 'Editor did not report its window handle.'}
-    $root=[Windows.Automation.AutomationElement]::FromHandle([IntPtr][Int64](Get-Content -LiteralPath $handleFile))
+    $hwnd=[IntPtr][Int64](Get-Content -LiteralPath $handleFile)
+    $root=[Windows.Automation.AutomationElement]::FromHandle($hwnd)
     function Find-Control([string]$name,[int]$tries=40) {
         $condition=New-Object Windows.Automation.PropertyCondition([Windows.Automation.AutomationElement]::NameProperty,$name)
         for($i=0;$i -lt $tries;$i++){
@@ -39,6 +41,22 @@ try {
     $buttons=@($all | Where-Object {$_.Current.ControlType -eq [Windows.Automation.ControlType]::Button -and [string]::IsNullOrWhiteSpace($_.Current.Name)})
     if($buttons.Count){throw ($buttons.Count.ToString()+' unnamed buttons')}
     $checks.elements=$all.Count
+    # Resize only this test window. Catch wrapped button text and overlapping
+    # toolbar controls at laptop width, using the app's accessibility bounds.
+    $scale=[PelagicStudioTestWindow]::GetDpiForWindow($hwnd)/96.0
+    [PelagicStudioTestWindow]::ShowWindow($hwnd,9) | Out-Null
+    if(-not [PelagicStudioTestWindow]::SetWindowPos($hwnd,[IntPtr]::Zero,0,0,[int](1000*$scale),[int](720*$scale),6)){throw 'Could not resize the isolated editor'}
+    $compactOk=$false
+    for($i=0;$i -lt 40;$i++){
+        Start-Sleep -Milliseconds 100
+        $graphicsBounds=(Find-Control 'Graphics settings').Current.BoundingRectangle
+        $resetBounds=(Find-Control 'Reset').Current.BoundingRectangle
+        if($graphicsBounds.Width -ge 90*$scale -and $graphicsBounds.Height -le 50*$scale -and -not $graphicsBounds.IntersectsWith($resetBounds)){$compactOk=$true;break}
+    }
+    if(-not $compactOk){throw ('Compact toolbar text wraps or overlaps Reset: '+$graphicsBounds.ToString())}
+    $checks.compact_toolbar='ok'
+    [PelagicStudioTestWindow]::ShowWindow($hwnd,3) | Out-Null
+    Start-Sleep -Milliseconds 250
     Invoke-Control 'Navigate'
     $null=Find-Control 'Camera speed'
     $null=Find-Control 'Go to land'

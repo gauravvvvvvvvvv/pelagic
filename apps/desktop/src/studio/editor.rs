@@ -2192,7 +2192,7 @@ impl State {
                             self.view_dirty = true;
                         }
                     });
-                    if ui.available_width() < 170.0 {
+                    if ui.available_size_before_wrap().x < 170.0 {
                         ui.end_row();
                     }
                     ui.vertical(|ui| {
