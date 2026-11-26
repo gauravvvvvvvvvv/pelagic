@@ -1,15 +1,52 @@
 # Pelagic — development build
 
-**Release status:** the current CPU implementation is a development foundation.
-The Unreal-inspired editor, production GPU rendering, game runtime and experimental
-learning extensions are not complete. A native GPU preview now shares scene geometry
-with a CPU preview; see [GPU preview](docs/GPU-PREVIEW.md). The existing `1.0.0` Cargo identifier is an unreleased
-candidate label, not product acceptance. See [product direction](docs/PRODUCT-DIRECTION.md).
+**Status: active development.** Pelagic is an Apache-2.0 Rust ocean simulation
+engine with a native Windows editor. The default studio uses egui/wgpu with
+docking, FFT ocean detail, an Earth explorer and marine simulation tools. A
+separate CPU editor opens automatically if GPU startup fails. The `1.0.0` Cargo
+identifier is an unreleased development label, not product acceptance. A complete
+game runtime, executable node editor and experimental learning architecture remain
+roadmap work. See [product direction](docs/PRODUCT-DIRECTION.md).
 
 A pure Rust ocean engine and native Windows studio, including its CPU renderer,
-interface and synthesized startup sound. It runs offline without a browser,
+interface and synthesized startup sound. Local scenes run offline without a browser,
 WebView, Python or JavaScript runtime. The Rust library and versioned C ABI also
 support independent headless hosts.
+
+## Build from source
+
+```powershell
+git clone https://github.com/gauravvvvvvvvvv/pelagic.git
+cd pelagic
+rustup toolchain install stable-x86_64-pc-windows-gnu --profile minimal --component clippy,rustfmt
+# Install LLVM-MinGW or MinGW binutils and put dlltool.exe on PATH.
+. ./scripts/Initialize-Toolchain.ps1
+cargo +stable-x86_64-pc-windows-gnu fetch --locked
+./scripts/Build-Desktop.ps1
+./Pelagic.exe
+```
+
+See [building and verification](docs/BUILDING.md) for prerequisites and checks.
+For a headless engine build on Linux: `cargo test -p pelagic --lib --tests --release --locked`.
+
+**Hardware:** integrated graphics can run the GPU studio; a discrete GPU is not
+required. If adapter/device initialization fails, Pelagic opens the CPU editor
+with the requested project and an explanation. Use `Pelagic.exe --cpu` to choose
+it directly. The CPU renderer provides a lower-detail reference view and does
+not provide the GPU studio's Earth and FFT visual effects.
+
+**Online data:** Earth tiles, observations, forecasts and AIS require network
+access and may have separate provider terms. Cached data is stored locally;
+the repository does not bundle those downloads or API credentials. See
+[credits and data licences](docs/CREDITS.md). Do not assume Apache-2.0 covers
+external datasets or the Pelagic branding.
+
+## Contribute
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md), [the roadmap](ROADMAP.md),
+[security reporting](SECURITY.md), and [licensing notices](NOTICE).
+Please use synthetic examples in public issues and keep private data and keys
+outside the repository. CI checks the Windows workspace and Linux headless core.
 
 Open **Pelagic.exe** in this repository or the portable package. In a release ZIP,
 **PelagicSetup.exe** adds verified per-user installation, a stable launcher, updates
@@ -40,6 +77,7 @@ Five supplied projects introduce the workflows:
 ## Realistic ocean and the real Earth
 
 - **Sea and sky.** The viewport draws the physics waves exactly, adds FFT short waves and whitecaps calibrated to observed coverage, and uses a physically based sky, clouds and the real sun position. It has vessel wakes, underwater light shafts and Snell's window. See [Ocean rendering](docs/OCEAN-RENDERING.md).
+- **Startup and touch anywhere.** Pelagic opens on a real sea (Kavaratti, Lakshadweep, or your last real-world scene). Click any point on the Earth for satellite imagery, depth, the live sea and the nearest port, then **Explore in 3D**, even on land or in a port.
 - **Real places.** **Earth → Create ocean scene here** (or right-click) builds a scene from NOAA's seafloor mosaic, the terrain tiles and UNEP-WCMC reef and seagrass maps. It adds an 82 km backdrop of real coast and mountains, the live sea and the sun for that hour.
 - **Marine layers.** **Earth → Layers** switches each layer on or off:
   - reference: shipping lanes, ports, lighthouses and seamarks, maritime boundaries, islands, sea names and undersea feature names;

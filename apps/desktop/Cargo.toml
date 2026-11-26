@@ -1,0 +1,33 @@
+[package]
+name = "pelagic-desktop"
+version = "1.0.0"
+edition = "2024"
+license = "Apache-2.0"
+repository = "https://github.com/gauravvvvvvvvvv/pelagic"
+description = "Pelagic native desktop launcher"
+
+[dependencies]
+pelagic = { path = "../.." }
+pelagic-render-gpu = { path = "../../crates/render-gpu" }
+ab_glyph = "0.2.32"
+png = "0.18.1"
+serde_json = { version = "1", features = ["float_roundtrip"] }
+serde = { version = "1", features = ["derive", "rc"] }
+# GPU editor shell: direct swapchain presentation, egui widgets and Unreal-style docking.
+egui = "0.37"
+egui-wgpu = { version = "0.37", default-features = false }
+egui-winit = { version = "0.37", default-features = false, features = ["clipboard", "accesskit"] }
+egui_dock = "0.22"
+winit = { version = "0.30.13", default-features = false, features = ["rwh_06"] }
+wgpu = { version = "30.0.2", default-features = false, features = ["std", "dx12", "vulkan", "wgsl"] }
+pollster = "0.4"
+# Earth view: tile streaming (Windows SChannel TLS, no C toolchain) and JPEG imagery.
+ureq = { version = "3.5", default-features = false, features = ["native-tls", "gzip"] }
+zune-jpeg = "0.4"
+# Live AIS stream (aisstream.io WebSocket) over the same Windows TLS stack ureq uses.
+native-tls = "0.2"
+
+[target.'cfg(windows)'.dependencies]
+accesskit = "0.25.2"
+accesskit_windows = "0.35.2"
+windows-sys = { version = "0.59.0", features = ["Win32_Foundation", "Win32_Storage_FileSystem", "Win32_System_DataExchange", "Win32_System_Com", "Win32_System_Console", "Win32_System_Memory", "Win32_UI_Shell", "Win32_UI_Shell_Common", "Win32_Graphics_Gdi", "Win32_Graphics_Dwm", "Win32_UI_WindowsAndMessaging", "Win32_System_LibraryLoader", "Win32_Media_Audio", "Win32_UI_Controls_Dialogs", "Win32_UI_HiDpi", "Win32_UI_Input_KeyboardAndMouse"] }

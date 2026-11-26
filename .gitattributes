@@ -1,0 +1,3 @@
+# Preserve upstream notices verbatim, including their original whitespace.
+third-party/** -whitespace
+apps/desktop/assets/OFL-*.txt -whitespace

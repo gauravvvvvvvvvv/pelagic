@@ -1,0 +1,24 @@
+[package]
+name = "pelagic"
+version = "1.0.0"
+edition = "2024"
+description = "A native Rust ocean simulation engine"
+license = "Apache-2.0"
+repository = "https://github.com/gauravvvvvvvvvv/pelagic"
+
+[dependencies]
+serde = { version = "1", features = ["derive", "rc"] }
+serde_json = { version = "1", features = ["float_roundtrip"] }
+sha2 = "0.10.9"
+# Portable musl maths: bit-identical simulation in every executable and platform.
+libm = "0.2.16"
+
+[lib]
+crate-type = ["rlib", "cdylib"]
+
+[workspace]
+members = ["apps/desktop", "crates/render-gpu"]
+resolver = "3"
+
+[target."cfg(windows)".dependencies]
+windows = { version = "0.62.2", features = ["Win32_Foundation", "Win32_System_Com", "Win32_UI_Shell", "Win32_UI_WindowsAndMessaging", "Win32_Storage_FileSystem"] }

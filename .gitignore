@@ -1,0 +1,19 @@
+/target/
+/output/
+/dist/
+/Pelagic.exe
+/Pelagic-next.exe
+/planning-private/
+# Local AI conversation/handover notes contain personal machine paths.
+/CLAUDE_HANDOVER.md
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.pfx
+*.p12
+*.log
+*.tmp
+Thumbs.db
+.DS_Store

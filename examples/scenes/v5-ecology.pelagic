@@ -1,0 +1,339 @@
+{
+  "body_model": {
+    "added_mass": {
+      "x": 2.0,
+      "y": 5.0,
+      "z": 6.0
+    },
+    "center_buoyancy": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.05
+    },
+    "contacts": true,
+    "half": {
+      "x": 0.65,
+      "y": 0.42,
+      "z": 0.4
+    },
+    "hold_depth": null,
+    "hold_heading": null,
+    "partial_buoyancy": true,
+    "profile_density": true,
+    "response_seconds": 0.15,
+    "thrust_limit": 40.0,
+    "thrusters": [
+      {
+        "direction": {
+          "x": 0.7071067811865476,
+          "y": -0.7071067811865476,
+          "z": 0.0
+        },
+        "limit": 20.0,
+        "position": {
+          "x": 0.4,
+          "y": 0.3,
+          "z": 0.0
+        }
+      },
+      {
+        "direction": {
+          "x": 0.7071067811865476,
+          "y": 0.7071067811865476,
+          "z": 0.0
+        },
+        "limit": 20.0,
+        "position": {
+          "x": 0.4,
+          "y": -0.3,
+          "z": 0.0
+        }
+      },
+      {
+        "direction": {
+          "x": 0.7071067811865476,
+          "y": 0.7071067811865476,
+          "z": 0.0
+        },
+        "limit": 20.0,
+        "position": {
+          "x": -0.4,
+          "y": 0.3,
+          "z": 0.0
+        }
+      },
+      {
+        "direction": {
+          "x": 0.7071067811865476,
+          "y": -0.7071067811865476,
+          "z": 0.0
+        },
+        "limit": 20.0,
+        "position": {
+          "x": -0.4,
+          "y": -0.3,
+          "z": 0.0
+        }
+      },
+      {
+        "direction": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1.0
+        },
+        "limit": 20.0,
+        "position": {
+          "x": -0.4,
+          "y": 0.0,
+          "z": 0.0
+        }
+      },
+      {
+        "direction": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1.0
+        },
+        "limit": 20.0,
+        "position": {
+          "x": 0.4,
+          "y": 0.0,
+          "z": 0.0
+        }
+      }
+    ]
+  },
+  "camera": {
+    "position": [
+      -8.0,
+      -15.0,
+      -14.0
+    ],
+    "target": [
+      5.0,
+      2.0,
+      -18.0
+    ]
+  },
+  "engine_build": "1eac16221e01a9e0",
+  "entities": [],
+  "environment": {
+    "deep_temperature": 6.0,
+    "grid": null,
+    "quality": 0,
+    "salinity": 35.0,
+    "shear": 0.008,
+    "sun_elevation": 38.0,
+    "temperature": 22.0,
+    "terrain": 1,
+    "terrain_material": 0,
+    "thermocline": 35.0,
+    "tide_period": 0.0,
+    "wave_direction": 35.0,
+    "wave_height": 1.2,
+    "wave_period": 6.0,
+    "wave_spread": 25.0
+  },
+  "flow_grid": null,
+  "format": "pelagic-project",
+  "metadata": {
+    "coordinates": "local metres; X east, Y north, Z up; surface Z=0",
+    "engine_version": "1.0.0",
+    "terrain_source": "synthetic preset",
+    "units": "SI",
+    "water_profile": "illustrative linear density and empirical sound speed v1",
+    "wave_model": "linear finite-depth; 32-component JONSWAP-shaped spectrum v1"
+  },
+  "name": "Pelagic schooling lab",
+  "particles": 64,
+  "provenance": {
+    "classification": "synthetic",
+    "licence": "Generated locally",
+    "measured": false,
+    "origin_latitude": 15.0,
+    "origin_longitude": 73.7,
+    "resolution": "4 m synthetic grid",
+    "retrieved_utc": "",
+    "source": "Synthetic Pelagic terrain",
+    "source_url": ""
+  },
+  "reference": {
+    "force": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "heading": 0.0,
+    "id": 1,
+    "kind": 0,
+    "mass": 12.0,
+    "mesh": null,
+    "model": {
+      "added_mass": {
+        "x": 2.0,
+        "y": 5.0,
+        "z": 6.0
+      },
+      "center_buoyancy": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.05
+      },
+      "contacts": true,
+      "half": {
+        "x": 0.65,
+        "y": 0.42,
+        "z": 0.4
+      },
+      "hold_depth": null,
+      "hold_heading": null,
+      "partial_buoyancy": true,
+      "profile_density": true,
+      "response_seconds": 0.15,
+      "thrust_limit": 40.0,
+      "thrusters": [
+        {
+          "direction": {
+            "x": 0.7071067811865476,
+            "y": -0.7071067811865476,
+            "z": 0.0
+          },
+          "limit": 20.0,
+          "position": {
+            "x": 0.4,
+            "y": 0.3,
+            "z": 0.0
+          }
+        },
+        {
+          "direction": {
+            "x": 0.7071067811865476,
+            "y": 0.7071067811865476,
+            "z": 0.0
+          },
+          "limit": 20.0,
+          "position": {
+            "x": 0.4,
+            "y": -0.3,
+            "z": 0.0
+          }
+        },
+        {
+          "direction": {
+            "x": 0.7071067811865476,
+            "y": 0.7071067811865476,
+            "z": 0.0
+          },
+          "limit": 20.0,
+          "position": {
+            "x": -0.4,
+            "y": 0.3,
+            "z": 0.0
+          }
+        },
+        {
+          "direction": {
+            "x": 0.7071067811865476,
+            "y": -0.7071067811865476,
+            "z": 0.0
+          },
+          "limit": 20.0,
+          "position": {
+            "x": -0.4,
+            "y": -0.3,
+            "z": 0.0
+          }
+        },
+        {
+          "direction": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 1.0
+          },
+          "limit": 20.0,
+          "position": {
+            "x": -0.4,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        {
+          "direction": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 1.0
+          },
+          "limit": 20.0,
+          "position": {
+            "x": 0.4,
+            "y": 0.0,
+            "z": 0.0
+          }
+        }
+      ]
+    },
+    "name": "Reference vehicle",
+    "position": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -20.0
+    },
+    "volume": 0.011707317073170732
+  },
+  "scene": {
+    "attenuation": 0.035,
+    "bottom_depth": 40.0,
+    "current": [
+      0.3,
+      0.0,
+      0.0
+    ],
+    "density": 1025.0,
+    "seed": 42,
+    "vehicle": false,
+    "vehicle_depth": 20.0
+  },
+  "school": {
+    "avoidance": 5.0,
+    "center": {
+      "x": 5.0,
+      "y": 2.0,
+      "z": -18.0
+    },
+    "count": 96,
+    "radius": 12.0,
+    "separation": 1.2,
+    "size": 0.45,
+    "speed": 1.2
+  },
+  "sensors": {
+    "acceleration_sigma": 0.01,
+    "beams": 48,
+    "camera_fov": 60.0,
+    "entity": 0,
+    "fan_degrees": 90.0,
+    "gyro_sigma": 0.001,
+    "latency_seconds": 0.02,
+    "mount": {
+      "x": 0.8,
+      "y": 0.0,
+      "z": -0.2
+    },
+    "position_noise": 0.03,
+    "range": 80.0,
+    "range_noise": 0.02,
+    "rate_hz": 10.0,
+    "tilt_degrees": 60.0,
+    "velocity_sigma": 0.01
+  },
+  "structure": {
+    "enabled": false,
+    "position": [
+      -38.0,
+      58.0,
+      1.0
+    ],
+    "scale": 1.0
+  },
+  "version": 4
+}

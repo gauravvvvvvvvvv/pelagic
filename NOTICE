@@ -1,0 +1,18 @@
+Pelagic
+Copyright 2026 Pelagic contributors
+
+Project-authored source code is licensed under Apache License 2.0; see LICENSE.
+Third-party components retain their own licenses. Font license texts are in
+apps/desktop/assets; additional upstream notices are in third-party/ and
+docs/CREDITS.md. scripts/Generate-Notices.ps1 generates the locked dependency
+license inventory used for binary distribution.
+
+The Pelagic logo and wordmark remain the project owner's branding. Inclusion
+does not grant a general artwork or trademark license.
+
+External map, imagery, habitat, weather, biodiversity and vessel data are not
+relicensed by this project. They are fetched separately and retain provider
+terms, attribution and usage restrictions, including non-commercial terms for
+some optional data sources. See docs/CREDITS.md before redistributing data or
+using those services commercially. The runtime caches and user API keys are
+excluded from the source repository.

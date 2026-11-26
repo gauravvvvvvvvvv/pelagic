@@ -1,0 +1,38 @@
+{
+  "format": "pelagic-vehicle",
+  "version": 1,
+  "name": "Survey AUV (example)",
+  "kind": 0,
+  "mass": 45.0,
+  "volume": 0.0444,
+  "model": {
+    "half": { "x": 1.1, "y": 0.16, "z": 0.16 },
+    "added_mass": { "x": 4.5, "y": 181.0, "z": 181.0 },
+    "added_inertia": { "x": 0.0, "y": 73.0, "z": 73.0 },
+    "center_buoyancy": { "x": 0.0, "y": 0.0, "z": 0.02 },
+    "partial_buoyancy": true,
+    "profile_density": true,
+    "contacts": true,
+    "thrust_limit": 120.0,
+    "response_seconds": 0.2,
+    "hold_depth": 15.0,
+    "hold_heading": 0.0,
+    "inertia": { "x": 0.58, "y": 18.4, "z": 18.4 },
+    "drag": { "x": 12.4, "y": 361.0, "z": 361.0 },
+    "angular_drag": { "x": 0.5, "y": 40.0, "z": 40.0 },
+    "fins": [
+      { "position": { "x": -1.0, "y": 0.0, "z": 0.2 }, "normal": { "x": 0.0, "y": 1.0, "z": 0.0 }, "area": 0.1, "lift_slope": 2.2, "stall_deg": 25.0, "channel": 1, "max_deflection_deg": 25.0 },
+      { "position": { "x": -1.0, "y": 0.0, "z": -0.2 }, "normal": { "x": 0.0, "y": 1.0, "z": 0.0 }, "area": 0.1, "lift_slope": 2.2, "stall_deg": 25.0, "channel": 1, "max_deflection_deg": 25.0 },
+      { "position": { "x": -1.0, "y": 0.2, "z": 0.0 }, "normal": { "x": 0.0, "y": 0.0, "z": 1.0 }, "area": 0.1, "lift_slope": 2.2, "stall_deg": 25.0, "channel": 2, "max_deflection_deg": 25.0 },
+      { "position": { "x": -1.0, "y": -0.2, "z": 0.0 }, "normal": { "x": 0.0, "y": 0.0, "z": 1.0 }, "area": 0.1, "lift_slope": 2.2, "stall_deg": 25.0, "channel": 2, "max_deflection_deg": 25.0 }
+    ],
+    "thrusters": [
+      { "direction": { "x": 1.0, "y": 0.0, "z": 0.0 }, "position": { "x": -1.1, "y": 0.0, "z": 0.0 }, "limit": 60.0 },
+      { "direction": { "x": 0.0, "y": 0.0, "z": 1.0 }, "position": { "x": 0.7, "y": 0.0, "z": 0.0 }, "limit": 20.0 },
+      { "direction": { "x": 0.0, "y": 0.0, "z": 1.0 }, "position": { "x": -0.7, "y": 0.0, "z": 0.0 }, "limit": 20.0 },
+      { "direction": { "x": 0.0, "y": 1.0, "z": 0.0 }, "position": { "x": 0.7, "y": 0.0, "z": 0.0 }, "limit": 20.0 },
+      { "direction": { "x": 0.0, "y": 1.0, "z": 0.0 }, "position": { "x": -0.7, "y": 0.0, "z": 0.0 }, "limit": 20.0 }
+    ]
+  },
+  "notes": "Example only. Cylindrical hull 2.2 m x 0.32 m. Inertia: solid cylinder. Drag: 0.5*rho*Cd*A with Cd 0.3 axial, 1.0 cross-flow. Added mass: 10% axial, rho*pi*r^2*L cross-flow. Added inertia: the cross-flow strips about the centre, A*a^2/3 (a = half length). Slightly positively buoyant (about 5 N net in 1025 kg/m3 water) so it surfaces if power is lost. Cruciform tail: two rudders and two hydroplanes, 0.1 m2 each, lift slope 2.2/rad (pair aspect ratio about 1.6, Helmbold), 25 deg deflection; the area includes an allowance for hull lift, which the simplified model does not compute, so the hull is directionally stable against its Munk moment."
+}

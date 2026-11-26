@@ -1,0 +1,64 @@
+{
+  "camera": {
+    "position": [
+      -95.0,
+      -125.0,
+      34.0
+    ],
+    "target": [
+      0.0,
+      15.0,
+      0.0
+    ]
+  },
+  "environment": {
+    "deep_temperature": 6.0,
+    "grid": null,
+    "quality": 0,
+    "salinity": 35.0,
+    "shear": 0.008,
+    "sun_elevation": 38.0,
+    "temperature": 22.0,
+    "terrain": 1,
+    "terrain_material": 0,
+    "thermocline": 35.0,
+    "tide_period": 0.0,
+    "wave_direction": 35.0,
+    "wave_height": 1.2,
+    "wave_period": 6.0,
+    "wave_spread": 25.0
+  },
+  "format": "pelagic-project",
+  "metadata": {
+    "coordinates": "local metres; X east, Y north, Z up; surface Z=0",
+    "engine_version": "0.1.0",
+    "terrain_source": "synthetic preset",
+    "units": "SI",
+    "water_profile": "illustrative linear density and empirical sound speed v1",
+    "wave_model": "linear finite-depth; 32-component JONSWAP-shaped spectrum v1"
+  },
+  "name": "Coastal waves",
+  "scene": {
+    "attenuation": 0.035,
+    "bottom_depth": 40.0,
+    "current": [
+      0.3,
+      0.0,
+      0.0
+    ],
+    "density": 1025.0,
+    "seed": 42,
+    "vehicle": true,
+    "vehicle_depth": 20.0
+  },
+  "structure": {
+    "enabled": true,
+    "position": [
+      -38.0,
+      58.0,
+      1.0
+    ],
+    "scale": 1.0
+  },
+  "version": 3
+}

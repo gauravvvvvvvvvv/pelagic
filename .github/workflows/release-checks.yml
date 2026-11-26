@@ -1,0 +1,68 @@
+name: Native release checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: msys2/setup-msys2@ec48f7c5447b3140e2b088413ae3a55687bccb6e # v2
+        id: msys2
+        with:
+          msystem: MINGW64
+          update: true
+          install: mingw-w64-x86_64-binutils
+      - name: Toolchain and dependencies
+        shell: pwsh
+        env:
+          MSYS2_LOCATION: ${{ steps.msys2.outputs.msys2-location }}
+        run: |
+          "$env:MSYS2_LOCATION\mingw64\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          rustup toolchain install stable-x86_64-pc-windows-gnu --profile minimal --component clippy,rustfmt
+          cargo +stable-x86_64-pc-windows-gnu fetch --locked
+      - name: Build, test and package
+        shell: pwsh
+        run: ./scripts/Build-Package.ps1
+      - name: Native accessibility and SDK
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force output/ci | Out-Null
+          powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/Test-Accessibility.ps1 -Executable target/release/pelagic-desktop.exe -Project examples/scenes/v5-robotics.pelagic -Report output/ci/accessibility.json
+          if ($LASTEXITCODE -ne 0) { throw 'Native accessibility failed' }
+          $env:PELAGIC_DISABLE_GPU='1'
+          try {
+            powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/Test-Accessibility.ps1 -Executable target/release/pelagic-desktop.exe -Project examples/scenes/v5-robotics.pelagic -Report output/ci/cpu-fallback.json -AutomaticCpuFallback
+            if ($LASTEXITCODE -ne 0) { throw 'Automatic CPU fallback failed' }
+          } finally { Remove-Item Env:PELAGIC_DISABLE_GPU }
+          ./target/release/examples/engine_host.exe ./target/release/pelagic.dll
+          if ($LASTEXITCODE -ne 0) { throw 'SDK host failed' }
+          ./target/release/examples/mavlink_loopback.exe
+          if ($LASTEXITCODE -ne 0) { throw 'Loopback failed' }
+          $stage=Get-ChildItem dist -Directory | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+          ./scripts/Test-Package.ps1 -PackageFolder $stage.FullName -OutputFolder output/ci/package-test
+      - name: Measurement evidence
+        shell: pwsh
+        run: |
+          ./target/release/examples/acceptance.exe output/ci/workloads.json 36000
+          # CPU timing is recorded on hosted hardware, not compared to a laptop's
+          # clock. The named local baseline remains the performance release gate.
+          Start-Process target/release/pelagic-desktop.exe -ArgumentList '--benchmark-ui','output/ci/ui.json' -WindowStyle Hidden -Wait
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: windows-release-evidence
+          path: |
+            dist/*.zip
+            dist/*.sha256
+            output/ci/*.json
+  core-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Stable Rust
+        run: rustup toolchain install stable --profile minimal
+      - run: cargo test -p pelagic --lib --tests --release --locked
